@@ -1,4 +1,4 @@
-##Plugin de integración de pagoUno para WooCommerce
+#  Plugin de integración de pagoUno para WooCommerce
 
 Ofrezca a sus clientes la posibilidad de realizar pagos con tarjeta por medio de pagoUno como método de pago.
 
