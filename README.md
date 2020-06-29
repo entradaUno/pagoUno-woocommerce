@@ -36,7 +36,7 @@ WooCommerce 3.0 o superior.
 
 1. Descargue el [zip] (https://github.com/entradaUno/pagoUno-woocommerce/archive/master.zip) ahora o desde el directorio de WordPress Module (https://es.wordpress.org/plugins/).
 2. Copiar carpeta pagoUno-woocommerce-master al directorio de plugins de wordpress ("raíz de wordpress"/wp-content/plugins). 
-3. Renombrarla pagoUno-woocommerce-master por woocommerce-pagouno.
+3. Renombrar la carpeta pagoUno-woocommerce-master por woocommerce-pagouno.
 
 ##  Configuración
 
