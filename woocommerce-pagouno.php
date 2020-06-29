@@ -1,12 +1,14 @@
 <?php
 session_start();
-/*
-    Plugin Name: pagoUno for WooCommerce
-    Plugin URI: https://www.pagouno.com/
-    Description: Acepte pagos con tarjeta de credito y débito con el plugin de pagoUno para WooCommerce
-    Version: 1.0
-    Author: entradaUno
-*/
+/**
+ * Plugin Name: pagoUno payments for WooCommerce
+ * Plugin URI: https://github.com/entradaUno/pagoUno-woocommerce
+ * Description: Acepte pagos con tarjeta de credito y débito con el plugin de pagoUno para WooCommerce
+ * Version: 1.0.0
+ * Author: entradaUno
+ * Author URI: https://soluciones.entradauno.com/
+ * Text Domain: woocommerce-pagouno
+ */
 
 /*
  * function inicilizadora de la clase ==> pagouno_init_gateway_class
@@ -76,7 +78,7 @@ function pagouno_init_gateway_class () {
             // si hay cuotas activadas se calcula el coeficiente de las cuotas
             $this->$cuotas_arr = array();
             if( !empty( $this->cuotas_habilitadas ) && is_array( $this->cuotas_habilitadas ) ){
-                global $woocommerce;  
+                global $woocommerce;
                 $total_price = $woocommerce->cart->total;
                 $price_formated = '';
                 for ($i = 0; $i < count($this->cuotas_habilitadas); $i ++) {
@@ -402,7 +404,7 @@ function pagouno_init_gateway_class () {
                         <div class="form-row form-row-first">
                             <label>Tipo de Documento <span class="required">*</span></label>
                             <select id="pagoUno_ccDocType" class="" name="select" style="width: 100%">
-                                <option value="DNI" selected>DNI</option> 
+                                <option value="DNI" selected>DNI</option>
                                 <option value="CUIL">CUIL</option>
                                 <option value="OTRO">OTRO</option>
                             </select>
@@ -441,7 +443,7 @@ function pagouno_init_gateway_class () {
                         <div class="form-row form-row-first">
                             <label>Tipo de Documento <span class="required">*</span></label>
                             <select id="pagoUno_ccDocType" class="" name="select" style="width: 100%">
-                                <option value="DNI" selected>DNI</option> 
+                                <option value="DNI" selected>DNI</option>
                                 <option value="CUIL">CUIL</option>
                                 <option value="OTRO">OTRO</option>
                             </select>
@@ -541,7 +543,7 @@ function pagouno_init_gateway_class () {
         public function process_payment($order_id) {
 
             global $woocommerce;
- 
+
             // detalles de la orden
             $order = wc_get_order( $order_id );
             $order_data = $order -> get_data();
@@ -628,7 +630,7 @@ function pagouno_init_gateway_class () {
 
                 //interaccion con el servicio de cobro de pagoUno
                 $response = wp_remote_post( 'https://api.pagouno.com/v1/Transaction/purchasegroup', $args );
-            
+
                 //evaluacion de la respuesta de pagoUno
                 if( !is_wp_error( $response ) ) {
                     $body = json_decode( $response['body'], true );
