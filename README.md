@@ -8,7 +8,7 @@ pagoUno es el sistema de recaudación más robusto y confiable de la industria c
 
 Nuestro complemento oficial de WooCommerce le permite agregar una vía de pago en su sitio web.  
 
-####¿Por qué elegir pagoUno?  
+####  ¿Por qué elegir pagoUno?  
 
 PagoUno brinda todas las herramientas necesarias de la manera más simple y segura para que puedas gestionar tus cobranzas y administrar tus ingresos. Rrespeta tu marca e identidad corporativa y nunca muestra su logo a la hora de transaccionar, es tu socio tecnológico y no tu intermediario.  
 
@@ -23,11 +23,11 @@ PagoUno pone a tu servicio toda la tecnología de mayor calidad a nivel mundial 
 
 #####  Compatibilidad  
 
-- WooCommerce 3.0 o superior.  
+WooCommerce 3.0 o superior.  
 
-#####  Instalación  
+####  Instalación  
 
-= Minimum Technical Requirements =
+#####  Minimum Technical Requirements  
 * WordPress version
 * Compatibility and dependency of WooCommerce VXX 
 * LAMP Environment (Linux, Apache, MySQL, PHP)
@@ -105,7 +105,7 @@ Código que le concederá la entidad de entradaUno.
 
 ####  Habilitar las siguientes cuotas
 
-Activa las cuotas que usted desee, las cuotas disponibles son:  
+Active las cuotas que usted desee, las cuotas disponibles son:  
 
 1.a. 3 cuotas  
 1.b. 6 cuotas  
