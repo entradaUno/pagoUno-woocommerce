@@ -2,7 +2,7 @@
 
 Ofrezca a sus clientes la posibilidad de realizar pagos con tarjeta por medio de pagoUno como método de pago.
 
-####Description
+####  Description
 
 pagoUno es el sistema de recaudación más robusto y confiable de la industria con el precio más bajo del mercado.   
 
@@ -14,18 +14,18 @@ PagoUno brinda todas las herramientas necesarias de la manera más simple y segu
 
 PagoUno pone a tu servicio toda la tecnología de mayor calidad a nivel mundial para poder afrontar las exigencias que la industria del e-commerce requiere en la actualidad.  
 
-#####Principales funcionalidades de pagoUno  
+#####  Principales funcionalidades de pagoUno  
 * Webhook online and in real time;  
 * High approval rates thanks to a robust fraud analysis;  
 * PCI Compliance;  
 * Accept the payment methods everyone prefers;  
 * Installment payments;  
 
-#####Compatibilidad  
+#####  Compatibilidad  
 
 - WooCommerce 3.0 o superior.  
 
-#####Instalación  
+#####  Instalación  
 
 = Minimum Technical Requirements =
 * WordPress version
@@ -38,31 +38,31 @@ PagoUno pone a tu servicio toda la tecnología de mayor calidad a nivel mundial 
 2. Copiar carpeta pagoUno-woocommerce-master al directorio de plugins de wordpress ("raíz de wordpress"/wp-content/plugins). 
 3. Renombrarla pagoUno-woocommerce-master por woocommerce-pagouno.
 
-##Configuración
+##  Configuración
 
-####Activación
+####  Activación
 La activación se realiza como cualquier plugin de Wordpress: Desde Plugins -> Plugins instalados -> activar el plugin de nombre <strong>pagoUno</strong>.<br />
 
-####Configuración plug in
+####  Configuración plug in
 
 Para llegar al menú de configuración del plugin ir a: WooCommerce Ajustes -> Pagos
 
-####Obtener datos de configuración
+####  Obtener datos de configuración
 
 1. Cree una cuenta de vendedor de pagoUno si aún no tienes una.
 2. Obtenga sus credenciales (clave privada y pública).
 3. Establezca las preferencias de pago y realice otras configuraciones avanzadas para cambiar las opciones predeterminadas.
 4. Ahora está listo para producción y recibir pagos reales.
 
-####Activar/Desactivar
+####  Activar/Desactivar
 
-Premite habilitar o no el plugin
+Permite habilitar o no el plugin.
 
-####Validación extra
+####  Validación extra
 
-Permite configurar el tipo de formulario que debera llenar el usuario con sus datos
+Permite configurar el tipo de formulario que debera llenar el usuario con sus datos.
 
-#####Formulario estándar
+#####  Formulario estándar
 
 1. Número de tarjeta  
 2. Fecha de vencimiento  
@@ -73,7 +73,7 @@ Permite configurar el tipo de formulario que debera llenar el usuario con sus da
 6. Cantidad de cuotas  
 7. Email de contacto  
 
-#####Formulario con validación extendida
+#####  Formulario con validación extendida
 
 1. Número de tarjeta
 2. Fecha de vencimiento
@@ -91,19 +91,19 @@ Permite configurar el tipo de formulario que debera llenar el usuario con sus da
 14. Calle	
 15. Altura
 
-####Llave de acceso privada (Private key)
+####  Llave de acceso privada (Private key)
 
 Llave de acceso privada que le concederá la entidad entradaUno.
 
-####Llave de acceso publica (Public Key)
+####  Llave de acceso publica (Public Key)
 
 Llave de acceso publica que le concederá la entidad de entradaUno.
 
-####Código de agrupador
+####  Código de agrupador
 
 Código que le concederá la entidad de entradaUno.
 
-####Habilitar las siguientes cuotas
+####  Habilitar las siguientes cuotas
 
 Activa las cuotas que usted desee, las cuotas disponibles son:  
 
@@ -118,7 +118,7 @@ Activa las cuotas que usted desee, las cuotas disponibles son:
 2.c. Ahora 12  
 2.d. Ahora 18  
 
-####Coeficiente
+####  Coeficiente
 
 1.a 3 cuotas -> Coeficiente que calcula el interés para 3 cuotas, ej: 1.2500, Importante: el valor 1 no agregara intereses, el valor 0 hara que el valor de su producto sea $0.  
 1.b 6 cuotas -> Coeficiente que calcula el interés para 6 cuotas, ej: 1.2500, Importante: el valor 1 no agregara intereses, el valor 0 hara que el valor de su producto sea $0.  
@@ -131,7 +131,7 @@ Activa las cuotas que usted desee, las cuotas disponibles son:
 2.c. Ahora 12 -> Coeficiente que calcula el interés para Ahora 12, ej: 1.2500, Importante: el valor 1 no agregara intereses, el valor 0 hara que el valor de su producto sea $0.  
 2.d. Ahora 18 -> Coeficiente que calcula el interés para Ahora 18, ej: 1.2500, Importante: el valor 1 no agregara intereses, el valor 0 hara que el valor de su producto sea $0.  
 
-####Observaciones
+####  Observaciones
 
 Si tiene activada una opción de cuota (Habilitar las siguientes cuotas), por ejemplo "3 Cuotas", si usted no tiene ningún valor para "Coeficiente para 3 Cuotas" el plugin no habilitará la opción de pago de 3 cuotas.
 Para guardar todos los cambios haga click en "Guardar los cambios" al pie de la página.  
