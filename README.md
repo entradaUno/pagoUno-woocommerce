@@ -41,7 +41,7 @@ WooCommerce 3.0 o superior.
 ##  Configuración
 
 ####  Activación
-La activación se realiza como cualquier plugin de Wordpress: Desde Plugins -> Plugins instalados -> activar el plugin de nombre <strong>pagoUno for WooCommerce</strong>.<br />
+La activación se realiza como cualquier plugin de Wordpress: Desde Plugins -> Plugins instalados -> activar el plugin de nombre <strong>pagoUno</strong>.<br />
 
 ####  Configuración plug in
 
