@@ -1,13 +1,3 @@
-=== pagoUno Gateway for WooCommerce ===
-Contributors: entradauno
-Tags: ecommerce, pagoUno, woocommerce
-Requires at least: 4.9.10
-Tested up to: 5.4
-Requires PHP: 5.6
-Stable tag: 4.2.1
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
 Plugin de integración de pagoUno para WooCommerce
 
 Ofrezca a sus clientes la posibilidad de realizar pagos con tarjeta por medio de pagoUno como método de pago.
