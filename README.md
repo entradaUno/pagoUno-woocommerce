@@ -120,15 +120,15 @@ Active las cuotas que usted desee, las cuotas disponibles son:
 
 ####  Coeficiente
 
-1.a 3 cuotas -> Coeficiente que calcula el interés para 3 cuotas, ej: 1.2500.
-1.b 6 cuotas -> Coeficiente que calcula el interés para 6 cuotas, ej: 1.2500.
-1.c 9 cuotas -> Coeficiente que calcula el interés para 9 cuotas, ej: 1.2500.
-1.d 12 cuotas -> Coeficiente que calcula el interés para 12 cuotas, ej: 1.2500.
-1.e 24 cuotas -> Coeficiente que calcula el interés para 24 cuotas, ej: 1.2500.
+1.a 3 cuotas -> Coeficiente que calcula el interés para 3 cuotas, ej: 1.2500.  
+1.b 6 cuotas -> Coeficiente que calcula el interés para 6 cuotas, ej: 1.2500.  
+1.c 9 cuotas -> Coeficiente que calcula el interés para 9 cuotas, ej: 1.2500.  
+1.d 12 cuotas -> Coeficiente que calcula el interés para 12 cuotas, ej: 1.2500.  
+1.e 24 cuotas -> Coeficiente que calcula el interés para 24 cuotas, ej: 1.2500.  
 
-2.a. Ahora 3 -> Coeficiente que calcula el interés para Ahora 3, ej: 1.2500.
-2.b. Ahora 6 -> Coeficiente que calcula el interés para Ahora 6, ej: 1.2500.
-2.c. Ahora 12 -> Coeficiente que calcula el interés para Ahora 12, ej: 1.2500.
+2.a. Ahora 3 -> Coeficiente que calcula el interés para Ahora 3, ej: 1.2500.  
+2.b. Ahora 6 -> Coeficiente que calcula el interés para Ahora 6, ej: 1.2500.  
+2.c. Ahora 12 -> Coeficiente que calcula el interés para Ahora 12, ej: 1.2500.  
 2.d. Ahora 18 -> Coeficiente que calcula el interés para Ahora 18, ej: 1.2500.  
 
 ##### Importante: el valor 1 no agregara intereses, el valor 0 hará que el valor de su producto sea $0.
