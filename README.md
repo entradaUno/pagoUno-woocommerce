@@ -62,7 +62,7 @@ Permite habilitar o no el plugin.
 
 Permite configurar el tipo de formulario que deberá llenar el usuario con sus datos.
 
-#####  Formulario estándar
+####  Formulario estándar
 
 1. Número de tarjeta  
 2. Fecha de vencimiento  
@@ -73,7 +73,7 @@ Permite configurar el tipo de formulario que deberá llenar el usuario con sus d
 6. Cantidad de cuotas  
 7. Email de contacto  
 
-#####  Formulario con validación extendida
+####  Formulario con validación extendida
 
 1. Número de tarjeta
 2. Fecha de vencimiento
