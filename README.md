@@ -2,30 +2,30 @@
 
 Ofrezca a sus clientes la posibilidad de realizar pagos con tarjeta por medio de pagoUno como método de pago.
 
-####  Description
+##  Descripción
 
 pagoUno es el sistema de recaudación más robusto y confiable de la industria con el precio más bajo del mercado.   
 
 Nuestro complemento oficial de WooCommerce le permite agregar una vía de pago en su sitio web.  
 
-####  ¿Por qué elegir pagoUno?  
+##  ¿Por qué elegir pagoUno?  
 
 PagoUno brinda todas las herramientas necesarias de la manera más simple y segura para que puedas gestionar tus cobranzas y administrar tus ingresos. Rrespeta tu marca e identidad corporativa y nunca muestra su logo a la hora de transaccionar, es tu socio tecnológico y no tu intermediario.  
 
 PagoUno pone a tu servicio toda la tecnología de mayor calidad a nivel mundial para poder afrontar las exigencias que la industria del e-commerce requiere en la actualidad.  
 
-#####  Principales funcionalidades de pagoUno  
+##  Principales funcionalidades de pagoUno  
 * Webhook online and in real time;  
 * High approval rates thanks to a robust fraud analysis;  
 * PCI Compliance;  
 * Accept the payment methods everyone prefers;  
 * Installment payments;  
 
-#####  Compatibilidad  
+##  Compatibilidad  
 
 WooCommerce 3.0 o superior.  
 
-####  Instalación  
+##  Instalación  
 
 #####  Minimum Technical Requirements  
 * WordPress version
@@ -60,7 +60,7 @@ Permite habilitar o no el plugin.
 
 ####  Validación extra
 
-Permite configurar el tipo de formulario que debera llenar el usuario con sus datos.
+Permite configurar el tipo de formulario que deberá llenar el usuario con sus datos.
 
 #####  Formulario estándar
 
