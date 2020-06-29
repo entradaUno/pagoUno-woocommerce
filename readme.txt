@@ -1,4 +1,4 @@
-=== pagoUno Gateway for WooCommerce ===
+=== pagoUno payments for WooCommerce ===
 Contributors: entradauno
 Tags: ecommerce, entradaUno, pagoUno, woocommerce
 Requires at least: 4.9.10
