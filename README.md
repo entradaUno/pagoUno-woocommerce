@@ -131,7 +131,8 @@ Active las cuotas que usted desee, las cuotas disponibles son:
 2.c. Ahora 12 -> Coeficiente que calcula el interés para Ahora 12, ej: 1.2500.  
 2.d. Ahora 18 -> Coeficiente que calcula el interés para Ahora 18, ej: 1.2500.  
 
-##### Importante: el valor 1 no agregara intereses, el valor 0 hará que el valor de su producto sea $0.
+##### Importante: el valor 1 no agregará intereses, el valor 0 hará que el valor de su producto sea $0.
+
 ####  Observaciones
 
 Si tiene activada una opción de cuota (Habilitar las siguientes cuotas), por ejemplo "3 Cuotas", si usted no tiene ningún valor para "Coeficiente para 3 Cuotas" el plugin no habilitará la opción de pago de 3 cuotas.
