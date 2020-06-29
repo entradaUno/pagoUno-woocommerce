@@ -20,7 +20,7 @@ Nuestro complemento oficial de WooCommerce le permite agregar una vía de pago e
 
 ##  ¿Por qué elegir pagoUno?
 
-PagoUno brinda todas las herramientas necesarias de la manera más simple y segura para que puedas gestionar tus cobranzas y administrar tus ingresos. Rrespeta tu marca e identidad corporativa y nunca muestra su logo a la hora de transaccionar, es tu socio tecnológico y no tu intermediario.
+PagoUno brinda todas las herramientas necesarias de la manera más simple y segura para que puedas gestionar tus cobranzas y administrar tus ingresos. Respeta tu marca e identidad corporativa y nunca muestra su logo a la hora de transaccionar, es tu socio tecnológico y no tu intermediario.
 
 PagoUno pone a tu servicio toda la tecnología de mayor calidad a nivel mundial para poder afrontar las exigencias que la industria del e-commerce requiere en la actualidad.
 
