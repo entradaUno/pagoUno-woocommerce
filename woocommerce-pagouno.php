@@ -1,7 +1,7 @@
 <?php
 session_start();
 /**
- * Plugin Name: pagoUno payments for WooCommerce
+ * Plugin Name: pagoUno payments for Woo
  * Plugin URI: https://github.com/entradaUno/pagoUno-woocommerce
  * Description: Acepte pagos con tarjeta de credito y débito con el plugin de pagoUno para WooCommerce
  * Version: 1.0.0
