@@ -34,7 +34,7 @@ WooCommerce 3.0 o superior.
 * SSL Certificate
 * Additional configuration: safe_mode off, memory_limit higher than 256MB
 
-1. Descargue el [zip] (https://github.com/pagouno/woocommerce-pagouno-plugin/archive/master.zip) ahora o desde el o WordPress Module [Directory] (https://br.wordpress.org/plugins / woocommerce-pagouno /)
+1. Descargue el [zip] (https://github.com/entradaUno/pagoUno-woocommerce/archive/master.zip) ahora o desde el directorio de WordPress Module (https://es.wordpress.org/plugins/).
 2. Copiar carpeta pagoUno-woocommerce-master al directorio de plugins de wordpress ("raíz de wordpress"/wp-content/plugins). 
 3. Renombrarla pagoUno-woocommerce-master por woocommerce-pagouno.
 
