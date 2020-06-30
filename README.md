@@ -50,7 +50,7 @@ Para llegar al menú de configuración del plugin ir a: WooCommerce Ajustes -> P
 ####  Obtener datos de configuración
 
 1. Cree una cuenta de vendedor de pagoUno si aún no tienes una.
-2. Obtenga sus credenciales (clave privada y pública).
+2. Obtenga sus credenciales (clave privada, pública y agrupador).
 3. Establezca las preferencias de pago y realice otras configuraciones avanzadas para cambiar las opciones predeterminadas.
 4. Ahora está listo para producción y recibir pagos reales.
 
