@@ -131,7 +131,7 @@ Active las cuotas que usted desee, las cuotas disponibles son:
 2.c. Ahora 12 -> Coeficiente que calcula el interés para Ahora 12, ej: 1.2500.  
 2.d. Ahora 18 -> Coeficiente que calcula el interés para Ahora 18, ej: 1.2500.  
 
-##### Importante: el valor 1 no agregará intereses, el valor 0 hará que el valor de su producto sea $0.
+##### IMPORTANTE: el valor 1 no agregará intereses, el valor 0 hará que el valor de su producto sea $0.
 
 ####  Observaciones
 
