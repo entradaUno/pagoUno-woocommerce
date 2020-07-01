@@ -1,9 +1,9 @@
 <?php
 session_start();
 /**
- * Plugin Name: pagoUno payments for Woo
+ * Plugin Name:Payments for pagoUno on WooCommerce
  * Plugin URI: https://github.com/entradaUno/pagoUno-woocommerce
- * Description: Acepte pagos con tarjeta de credito y débito con el plugin de pagoUno para WooCommerce
+ * Description: Acepte pagos con tarjeta de credito y débito con el plugin de pagoUno en WooCommerce
  * Version: 1.0.0
  * Author: entradaUno
  * Author URI: https://soluciones.entradauno.com/
@@ -41,7 +41,7 @@ function pagouno_init_gateway_class () {
             $this->icon = ''; // icono o imagen a renderearse en la descripcion
             $this->has_fields = true; // true para indicar que tiene formulario
             $this->method_title = 'pagoUno';
-            $this->method_description = 'Acepte pagos con tarjeta con pagoUno plugin para WooCommerce'; // se rendereara en la pagina de opciones
+            $this->method_description = 'Acepte pagos con tarjeta con pagoUno plugin en WooCommerce'; // se rendereara en la pagina de opciones
 
             //======================================================================================================
             // gateways can support subscriptions, refunds, saved payment methods,
@@ -57,7 +57,7 @@ function pagouno_init_gateway_class () {
             // carga de opciones
             $this->init_settings();
             $this->title = "pagoUno";
-            $this->description = "Por favor complete el formulario con sus datos y los de su tarjta";
+            $this->description = "Por favor complete el formulario con sus datos y los de su tarjeta";
             $this->enabled = $this->get_option( 'enabled' );
             $this->extended_form = $this->get_option( 'extended_form' );
             $this->private_key = $this->get_option( 'private_key' );

@@ -1,4 +1,4 @@
-=== pagoUno payments for Woo ===
+=== Payments for pagoUno on WooCommerce ===
 Contributors: entradauno
 Tags: ecommerce, entradaUno, pagoUno, woocommerce
 Requires at least: 4.9.10
@@ -44,9 +44,9 @@ WooCommerce 3.0 o superior.
 * SSL Certificate
 * Additional configuration: safe_mode off, memory_limit higher than 256MB
 
-1. Descargue el [zip] (https://github.com/entradaUno/pagoUno-woocommerce/archive/master.zip) ahora o desde el directorio de WordPress Module (https://es.wordpress.org/plugins/).
+1. Descargue el [zip] (https://github.com/entradaUno/pagoUno-woocommerce/archive/master.zip) ahora o desde el directorio de WordPress Module (https://es.wordpress.org/plugins/wc-pagouno-payments).
 2. Copiar carpeta pagoUno-woocommerce-master al directorio de plugins de wordpress ("raíz de wordpress"/wp-content/plugins).
-3. Renombrar la carpeta pagoUno-woocommerce-master por woocommerce-pagouno.
+3. Renombrar la carpeta pagoUno-woocommerce-master por wc-pagouno-payments.
 
 ##  Configuración
 
