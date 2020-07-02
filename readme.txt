@@ -147,3 +147,16 @@ Active las cuotas que usted desee, las cuotas disponibles son:
 
 Si tiene activada una opción de cuota (Habilitar las siguientes cuotas), por ejemplo "3 Cuotas", si usted no tiene ningún valor para "Coeficiente para 3 Cuotas" el plugin no habilitará la opción de pago de 3 cuotas.
 Para guardar todos los cambios haga click en "Guardar los cambios" al pie de la página.
+
+###### Servicios externos utilizados en esta versión
+
+El plugin requiere enviar información a nuestros servidores para realizar las operaciones correspondientes a la tokenización de una tarjeta y al cobro de una operación con la misma.
+Estos servicios requieren de las credenciales proporcionadas por entradaUno ya mencionado anteriormente en el punto donde se explica como obtener datos de configuración.
+
+##### Solicitud del token de la tarjeta
+La solicitud de token es el primer paso necesario para ejecutar el cobro de una operación, se realiza desde el cliente.
+Este realiza la solicitud https://api.pagouno.com/v1/Transaction/token.
+
+##### Cobro de la operación
+La solicitud del cobro de una operación se realizar server to server y así asegurar no exponer credenciales que deben permanecer como privadas.
+Este realiza la solicitud a https://api.pagouno.com/v1/Transaction/purchasegroup.
