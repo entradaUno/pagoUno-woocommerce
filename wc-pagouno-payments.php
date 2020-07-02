@@ -515,26 +515,24 @@ function pagouno_init_gateway_class () {
             }
 
             // scripts js
-            wp_register_script( 'woocommerce_jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js');
-            wp_register_script( 'woocommerce_cleave', 'https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js');
-            wp_register_script( 'woocommerce_pagoUno_mask', plugins_url( '/assets/js/mask.js', __FILE__ ));
-            wp_register_script( 'woocommerce_pagoUno', plugins_url( '/assets/js/pagoUno.js', __FILE__ ));
-
-            wp_localize_script( 'woocommerce_pagoUno_mask', 'php_params', array(
+			
+			$my_js_mask  = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/mask.js' ));
+			$my_js_pago_uno = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/pagoUno.js' ));
+			
+            wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'mask_js', plugins_url( '/assets/js/mask.js', __FILE__ ), array('jquery'), $my_js_mask );
+			wp_enqueue_script( 'pago_uno_js', plugins_url( '/assets/js/pagoUno.js', __FILE__ ), array('jquery'), $my_js_pago_uno );
+			
+			wp_localize_script( 'mask_js', 'php_params', array(
                 'extendedForm' => $this->extended_form
-            ) );
+            ));
 
-            wp_localize_script( 'woocommerce_pagoUno', 'php_params', array(
+            wp_localize_script( 'pago_uno_js', 'php_params', array(
                 'publicKey'    => $this->publishable_key,
                 'extendedForm' => $this->extended_form,
                 'cuotas'       => $this->$cuotas_arr,
                 'total'        => $woocommerce->cart->total
-            ) );
-
-            wp_enqueue_script( 'woocommerce_jquery' );
-            wp_enqueue_script( 'woocommerce_cleave' );
-            wp_enqueue_script( 'woocommerce_pagoUno_mask' );
-            wp_enqueue_script( 'woocommerce_pagoUno' );
+            ));
         }
         public function validate_fields() {
             //validacion para los campos
