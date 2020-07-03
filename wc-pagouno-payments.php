@@ -28,11 +28,6 @@ function pagouno_add_gateway_class( $gateways ) {
 add_action( 'plugins_loaded', 'pagouno_init_gateway_class' );
 function pagouno_init_gateway_class () {
     class WC_PagoUno_Gateway extends WC_Payment_Gateway {
-        function test() {
-            $testjs = plugins_url( '/assets/js/test.js', __FILE__ );
-            echo '<script type="text/javascript" src="' . $testjs . '"></script>';
-            return;
-        }
         public function __construct() {
 
             $this->CALLBACK_URL = "pagouno-endpoint";
@@ -515,14 +510,14 @@ function pagouno_init_gateway_class () {
             }
 
             // scripts js
-			
+
 			$my_js_mask  = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/mask.js' ));
 			$my_js_pago_uno = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/pagoUno.js' ));
-			
+
             wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'mask_js', plugins_url( '/assets/js/mask.js', __FILE__ ), array('jquery'), $my_js_mask );
 			wp_enqueue_script( 'pago_uno_js', plugins_url( '/assets/js/pagoUno.js', __FILE__ ), array('jquery'), $my_js_pago_uno );
-			
+
 			wp_localize_script( 'mask_js', 'php_params', array(
                 'extendedForm' => $this->extended_form
             ));
