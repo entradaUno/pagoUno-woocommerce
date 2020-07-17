@@ -80,100 +80,100 @@ function pagouno_init_gateway_class () {
                     switch ( $this->cuotas_habilitadas[$i] ) {
                         case 3:
                             if ( !empty($this->coef_3) && is_numeric($this->coef_3)) {
-                                $price_formated = number_format( $total_price * $this->coef_3 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_3 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 3,
                                     'isAhora' => false,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 3 , 2)
+                                    'cuota'  => number_format( $price_formated / 3 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 6:
                             if ( !empty($this->coef_6) && is_numeric($this->coef_6)) {
-                                $price_formated = number_format( $total_price * $this->coef_6 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_6 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 6,
                                     'isAhora' => false,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 6 , 2)
+                                    'cuota'  => number_format( $price_formated / 6 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 9:
                             if ( !empty($this->coef_9) && is_numeric($this->coef_9) ) {
-                                $price_formated = number_format( $total_price * $this->coef_9 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_9 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 9,
                                     'isAhora' => false,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 9 , 2)
+                                    'cuota'  => number_format( $price_formated / 9 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 12:
                             if ( !empty($this->coef_12) && is_numeric($this->coef_12) ) {
-                                $price_formated = number_format( $total_price * $this->coef_12, 2);
+                                $price_formated = number_format( $total_price * $this->coef_12, 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 12,
                                     'isAhora' => false,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 12 , 2)
+                                    'cuota'  => number_format( $price_formated / 12 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 24:
                             if ( !empty($this->coef_24) && is_numeric($this->coef_24) ) {
-                                $price_formated = number_format( $total_price * $this->coef_24 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_24 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 24,
                                     'isAhora' => false,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 24 , 2)
+                                    'cuota'  => number_format( $price_formated / 24 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 13:
                             if ( !empty($this->coef_a3) && is_numeric($this->coef_a3) ) {
-                                $price_formated = number_format( $total_price * $this->coef_a3 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_a3 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas'  => 13,
                                     'isAhora' => true,
                                     'total'   => $price_formated,
-                                    'cuota'   => number_format( $price_formated / 3 , 2)
+                                    'cuota'   => number_format( $price_formated / 3 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 16:
                             if ( !empty($this->coef_a6) && is_numeric($this->coef_a6) ) {
-                                $price_formated = number_format( $total_price * $this->coef_a6 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_a6 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 16,
                                     'isAhora' => true,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 6 , 2)
+                                    'cuota'  => number_format( $price_formated / 6 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 7:
                             if ( !empty($this->coef_a12) && is_numeric($this->coef_a12) ) {
-                                $price_formated = number_format( $total_price * $this->coef_a12 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_a12 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 7,
                                     'isAhora' => true,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 12 , 2 )
+                                    'cuota'  => number_format( $price_formated / 12 , 2, '.', '')
                                 ));
                             } else {};
                             break;
                         case 8:
                             if ( !empty($this->coef_a18) && is_numeric($this->coef_a18) ) {
-                                $price_formated = number_format( $total_price * $this->coef_a18 , 2);
+                                $price_formated = number_format( $total_price * $this->coef_a18 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 8,
                                     'isAhora' => true,
                                     'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 18 , 2)
+                                    'cuota'  => number_format( $price_formated / 18 , 2, '.', '')
                                 ));
                             } else {};
                             break;
@@ -190,6 +190,10 @@ function pagouno_init_gateway_class () {
             add_action( 'wp_enqueue_scripts', array( $this, 'pagouno_scripts' ) );
         }
         public function init_form_fields() {
+
+            $my_js_configuration_mask  = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/configuration-mask.js' ));
+            wp_enqueue_script( 'configuration_mask_js', plugins_url( '/assets/js/configuration-mask.js', __FILE__ ), array('jquery'), $my_js_configuration_mask );
+
             $this->form_fields = array(
                 'enabled' => array(
                     'title'       => 'Activar/Desactivar',
@@ -512,7 +516,7 @@ function pagouno_init_gateway_class () {
             // scripts js
 
 			$my_js_mask  = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/mask.js' ));
-			$my_js_pago_uno = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/pagoUno.js' ));
+            $my_js_pago_uno = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/pagoUno.js' ));
 
             wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'mask_js', plugins_url( '/assets/js/mask.js', __FILE__ ), array('jquery'), $my_js_mask );
