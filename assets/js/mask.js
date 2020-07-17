@@ -115,8 +115,8 @@ jQuery(document).ready(($) => {
         });
 
         var cVerification = new Cleave(creditCardSecurityCode, {
-            numeral: true,
-            numeralThousandsGroupStyle: 'none'
+            blocks: [4],
+            numericOnly: true
         });
         var cExpires = new Cleave(creditCardExpires, {
             date: true,
