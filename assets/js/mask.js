@@ -196,7 +196,7 @@ jQuery(document).ready(($) => {
             $('#puEmailError').css("display", "none");
         });
 
-        if (php_params.extendedForm === "yes") {
+        if (php_params_mask.extendedForm === "yes") {
             var birthDate = document.querySelector('#pagoUno_birthDate');
             var phoneNumber = document.querySelector('#pagoUno_phone');
             var country = document.querySelector('#pagoUno_country');

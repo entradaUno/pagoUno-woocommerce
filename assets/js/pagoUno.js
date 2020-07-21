@@ -1,3 +1,5 @@
+
+
 jQuery(document).ready(function ($) {
     var isValidEmail = function (email) {
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
@@ -359,48 +361,4 @@ jQuery(document).ready(function ($) {
     };
 	var checkout_form = $( 'form.woocommerce-checkout' );
     checkout_form.on( 'checkout_place_order', tokenRequest );
-
-    setTimeout(() => {
-        var lista_cuotas = $('#pagoUno_dues');
-
-        var option_default = document.createElement('option');
-        option_default.setAttribute('value', '1-false');
-        option_default.innerHTML = '1 solo pago de $' + php_params.total;
-        lista_cuotas.append(option_default);
-
-        if(php_params.cuotas !== "no"){
-            php_params.cuotas.forEach( cuota => {
-                if(!isNaN(parseFloat(cuota.total)) && cuota.total > 0){
-                    var option = document.createElement('option');
-                    option.setAttribute('value', cuota.cuotas + '-' + cuota.total);
-                    if (cuota.isAhora) {
-                        var ahora_le = '';
-                        var ahora_cu = '';
-                        switch (cuota.cuotas) {
-                            case 13:
-                                ahora_le = 'Ahora 3';
-                                ahora_cu = 3;
-                                break;
-                            case 16:
-                                ahora_le = 'Ahora 6';
-                                ahora_cu = 6;
-                                break;
-                            case 7:
-                                ahora_le = 'Ahora 12';
-                                ahora_cu = 12;
-                                break;
-                            case 8:
-                                ahora_le = 'Ahora 18';
-                                ahora_cu = 18;
-                                break;
-                        }
-                        option.innerHTML = ahora_cu + ' cuotas con ' + ahora_le + ' de $ ' + cuota.cuota + ' (Total: $' + cuota.total + ')';
-                    } else {
-                        option.innerHTML = cuota.cuotas + ' cuotas de $ ' + cuota.cuota + ' (Total: $' + cuota.total + ')';
-                    }
-                    lista_cuotas.append(option);
-                }
-            });
-        }
-    }, 1500);
 });
