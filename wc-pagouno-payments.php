@@ -394,7 +394,7 @@ function pagouno_init_gateway_class () {
 
             $total = $woocommerce->session->get('cart_totals')['total'];
             $total_shipping = $woocommerce->session->get('cart_totals')['shipping_total'];
-
+            
             $this->$cuotas_arr = array();
             if( !empty( $this->cuotas_habilitadas ) && is_array( $this->cuotas_habilitadas ) ){
                 global $woocommerce;
