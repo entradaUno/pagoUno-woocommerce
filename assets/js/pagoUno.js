@@ -7,13 +7,13 @@ jQuery(document).ready(function ($) {
     var successCallback = function(data) {
         const button = document.querySelector('#place_order');
         //guardo el token en el form de woocommerce
-        $('#pagouno_token').val(data.data[0].id);
+        jQuery('#pagouno_token').val(data.data[0].id);
         //guardo la cantidad de cuotas
-        var dues_val = $('#pagoUno_dues').val().split('-');
-        $('#pagouno_cuotas').val(dues_val[0]);
-        $('#pagouno_hidden_total').val(dues_val[1]);
+        var dues_val = jQuery('#pagoUno_dues').val().split('-');
+        jQuery('#pagouno_cuotas').val(dues_val[0]);
+        jQuery('#pagouno_hidden_total').val(dues_val[1]);
         //obtengo el form de woocommerce
-        var checkout_form = $( 'form.woocommerce-checkout' );
+        var checkout_form = jQuery( 'form.woocommerce-checkout' );
         // desactivo token request
         checkout_form.off( 'checkout_place_order', tokenRequest );
         // hago submit del form
@@ -24,12 +24,12 @@ jQuery(document).ready(function ($) {
     };
     var errorCallback = function(data) {
         const button = document.querySelector('#place_order');
-        $('#pagouno_token').val("-1");
+        jQuery('#pagouno_token').val("-1");
         //guardo la cantidad de cuotas
-        var dues_val = $('#pagoUno_dues').val().split('-');
-        $('#pagouno_cuotas').val(dues_val[0]);
-        $('#pagouno_hidden_total').val(dues_val[1]);
-        var checkout_form = $( 'form.woocommerce-checkout' );
+        var dues_val = jQuery('#pagoUno_dues').val().split('-');
+        jQuery('#pagouno_cuotas').val(dues_val[0]);
+        jQuery('#pagouno_hidden_total').val(dues_val[1]);
+        var checkout_form = jQuery( 'form.woocommerce-checkout' );
         // desactivo token request
         checkout_form.off( 'checkout_place_order', tokenRequest );
         // hago submit del form
@@ -39,19 +39,19 @@ jQuery(document).ready(function ($) {
         checkout_form.on( 'checkout_place_order', tokenRequest );
     };
     var tokenRequest = function() {
-        var checkout_form = $( 'form.woocommerce-checkout' );
+        var checkout_form = jQuery( 'form.woocommerce-checkout' );
         const button = document.querySelector('#place_order');
         button.disabled = true;
 
         var validator = true;
 
         // validacion para los campos -----------------------------------------------------------------------------
-        var ccNum = $('#pagoUno_ccNo').val();
-        var ccExpDate = $('#pagoUno_expdate').val();
-        var cvc = $('#pagoUno_cvc').val();
-        var name = $('#pagoUno_ccName').val();
-        var docNum = $('#pagoUno_ccDocNum').val();
-        var email = $('#pagoUno_email').val();
+        var ccNum = jQuery('#pagoUno_ccNo').val();
+        var ccExpDate = jQuery('#pagoUno_expdate').val();
+        var cvc = jQuery('#pagoUno_cvc').val();
+        var name = jQuery('#pagoUno_ccName').val();
+        var docNum = jQuery('#pagoUno_ccDocNum').val();
+        var email = jQuery('#billing_email').val();
 
         // validacion y formateo del numero de tarjeta
 
@@ -59,198 +59,177 @@ jQuery(document).ready(function ($) {
             ccNum = ccNum.replace(/ /g, '');
             if (ccNum.length !== 16) {
                 validator = false;
-                $('#pagoUno_ccNo').parent('.form-row').removeClass('woocommerce-invalid');
-                $('#puCcError').css("display", "");
+                jQuery('#pagoUno_ccNo').addClass('pu-invalid');
             } else {
-                if( $('#pagoUno_ccNo').parent('.form-row').hasClass( "woocommerce-invalid" ) ){
-                    $('#pagoUno_ccNo').parent('.form-row').removeClass('woocommerce-invalid');
-                    $('#puCcError').css("display", "");
+                if( jQuery('#pagoUno_ccNo').hasClass( "pu-invalid" ) ){
                     validator = false;
-                }else {
-                    $('#puCcError').css("display", "none");
                 }
             }
         } else {
             validator = false;
-            $('#pagoUno_ccNo').parent('.form-row').removeClass('woocommerce-invalid');
-            $('#puCcError').css("display", "");
+            jQuery('#pagoUno_ccNo').addClass('pu-invalid');
         }
 
         // validacion y formateo de la fecha de vencimiento de la tarjeta
         if (ccExpDate.length > 0) {
             ccExpDate = ccExpDate.replace(/\//g, '');
             if(ccExpDate.length === 4){
-                if ($('#pagoUno_expdate').parent('.form-row').hasClass( "woocommerce-invalid" )){
+                if (jQuery('#pagoUno_expdate').hasClass( "pu-invalid" )){
                     validator = false;
-                    $('#pagoUno_expdate').parent('.form-row').removeClass('woocommerce-invalid');
-                    $('#puEpError').css("display", "");
                 } else {
                     ccExpDate = ccExpDate[2] + ccExpDate[3] + ccExpDate[0] + ccExpDate[1];
-                    $('#puEpError').css("display", "none");
                 }
             } else {
                 validator = false;
-                $('#pagoUno_expdate').parent('.form-row').removeClass('woocommerce-invalid');
-                $('#puEpError').css("display", "");
+                jQuery('#pagoUno_expdate').addClass('pu-invalid');
             }
         } else {
             validator = false;
-            $('#pagoUno_expdate').parent('.form-row').removeClass('woocommerce-invalid');
-            $('#puEpError').css("display", "");
+            jQuery('#pagoUno_expdate').addClass('pu-invalid');
         }
 
         // validacion y formateo del cvc
         if (cvc.length > 0) {
             if (cvc.length !== 3) {
                 validator = false;
-                $('#pagoUno_cvc').parent('.form-row').removeClass('woocommerce-invalid');
-                $('#puCvcError').css("display", "");
+                jQuery('#pagoUno_cvc').addClass('pu-invalid');
             } else {
-                if ($('#pagoUno_cvc').parent('.form-row').hasClass( "woocommerce-invalid" )) {
+                if (jQuery('#pagoUno_cvc').hasClass( 'pu-invalid' )) {
                     validator = false;
-                    $('#pagoUno_cvc').parent('.form-row').removeClass('woocommerce-invalid');
-                    $('#puCvcError').css("display", "");
-                } else {
-                    $('#puCvcError').css("display", "none");
                 }
             }
         } else {
             validator = false;
-            $('#pagoUno_cvc').parent('.form-row').removeClass('woocommerce-invalid');
-            $('#puCvcError').css("display", "");
+            jQuery('#pagoUno_cvc').addClass('pu-invalid');
         }
 
         // validacion del nombre de usuario
         if (name.length > 0) {
             var patt = new RegExp("[0-9]", "g");
             if( patt.test( name )){
-                $('#puNameError').css("display", "");
                 validator = false;
+                jQuery('#pagoUno_ccName').addClass('pu-invalid');
             }
         } else {
-            $('#puNameError').css("display", "");
             validator = false;
+            jQuery('#pagoUno_ccName').addClass('pu-invalid');
         }
 
         // validacion para el numero de documento
         if (docNum.length > 0) {
-            if($('#pagoUno_ccDocNum').parent('.form-row').hasClass( "woocommerce-invalid" )){
-                $('#puDocNumError').css("display", "");
-                $('#pagoUno_ccDocNum').parent('.form-row').removeClass('woocommerce-invalid');
+            if( jQuery('#pagoUno_ccDocNum').hasClass( "pu-invalid" ) ){
                 validator = false;
             } else {
-                $('#puDocNumError').css("display", "none");
                 docNum = docNum.replace(/\./g, '');
             }
         } else {
-            $('#puDocNumError').css("display", "");
-            $('#pagoUno_ccDocNum').parent('.form-row').removeClass('woocommerce-invalid');
             validator = false;
-        }
-
-        // validacion para el email
-        if(email.length > 0 ){
-            email = email.toLowerCase();
-            if (!isValidEmail(email)) {
-                $('#puEmailError').css("display", "");
-                validator = false;
-            }
-        } else {
-            $('#puEmailError').css("display", "");
-            validator = false;
+            jQuery('#pagoUno_ccDocNum').addClass( "pu-invalid" );
         }
 
         // validacion para los campos adicionales ----------------------------------------------------------------
-        var bDate = $('#pagoUno_birthDate').val();
-        var country = $('#pagoUno_country').val();
-        var state = $('#pagoUno_state').val();
-        var city = $('#pagoUno_city').val();
-        var street = $('#pagoUno_street').val();
-        var streetNumber = $('#pagoUno_streetNumber').val();
 
         if (php_params.extendedForm == "yes") {
+
+            var bDate = jQuery('#pagoUno_birthDate').val();
+            var country = jQuery('#pagoUno_country').val();
+            var state = jQuery('#pagoUno_state').val();
+            var city = jQuery('#pagoUno_city').val();
+            var street = jQuery('#pagoUno_street').val();
+            var streetNumber = jQuery('#pagoUno_streetNumber').val();
+            email = jQuery('#pagoUno_email').val();
+
+            // validacion para el email
+            if(email.length > 0 ){
+                email = email.toLowerCase();
+                if (!isValidEmail(email)) {
+                    validator = false;
+                    jQuery('#pagoUno_email').addClass('pu-invalid');
+                }
+            } else {
+                validator = false;
+                jQuery('#pagoUno_email').addClass('pu-invalid');
+            }
 
             // validacion para la fecha de nacimiento
             if (bDate.length > 0) {
                 bDate = bDate.replace(/\//g, '');
                 if( bDate.length !== 8){
-                    $('#pagoUno_birthDate').parent('.form-row').removeClass('woocommerce-invalid');
-                    $('#puBirthDateError').css("display", "");
                     validator = false;
+                    jQuery('#pagoUno_birthDate').addClass('pu-invalid');
                 } else {
-                    if ($('#pagoUno_birthDate').parent('.form-row').hasClass( "woocommerce-invalid" )) {
-                        $('#pagoUno_birthDate').parent('.form-row').removeClass('woocommerce-invalid');
-                        $('#puBirthDateError').css("display", "");
+                    if (jQuery('#pagoUno_birthDate').hasClass('pu-invalid')) {
                         validator = false;
                     }
                 }
             } else {
-                $('#pagoUno_birthDate').parent('.form-row').removeClass('woocommerce-invalid');
-                $('#puBirthDateError').css("display", "");
                 validator = false;
+                jQuery('#pagoUno_birthDate').addClass('pu-invalid');
             }
 
             // validacion para el pais
             if(country.length > 0){
                 var patt = new RegExp("[0-9]", "g");
                 if( patt.test( country )){
-                    $('#puCountryError').css("display", "");
                     validator = false;
+                    jQuery('#pagoUno_country').addClass('pu-invalid');
                 }
             } else {
-                $('#puCountryError').css("display", "");
                 validator = false;
+                jQuery('#pagoUno_country').addClass('pu-invalid');
             }
 
             // validacion para la provincia
             if(state.length > 0){
                 var patt = new RegExp("[0-9]", "g");
                 if( patt.test( state )){
-                    $('#puStateError').css("display", "");
                     validator = false;
+                    jQuery('#pagoUno_state').addClass('pu-invalid');
                 }
             } else {
-                $('#puStateError').css("display", "");
                 validator = false;
+                jQuery('#pagoUno_state').addClass('pu-invalid');
             }
 
             // validacion para la ciudad
             if(city.length > 0){} else {
-                $('#puCityError').css("display", "");
                 validator = false;
+                jQuery('#pagoUno_city').addClass('pu-invalid');
             }
 
             // validacion para la calle
             if(street.length > 0){} else {
-                $('#puStreetError').css("display", "");
                 validator = false;
+                jQuery('#pagoUno_street').addClass('pu-invalid');
             }
 
             // validacion para la altura
             if(streetNumber.length > 0){} else {
-                $('#puStreetNumberError').css("display", "");
                 validator = false;
+                jQuery('#pagoUno_streetNumber').addClass('pu-invalid');
             }
         }
 
-        if ($("#payment_method_pagouno").is(':checked')) {
+        if (jQuery("#payment_method_pagouno").is(':checked')) {
 
             if (validator) {
 
-                $('#puCcError').css("display", "none");
-                $('#puEpError').css("display", "none");
-                $('#puCvcError').css("display", "none");
-                $('#puNameError').css("display", "none");
-                $('#puDocNumError').css("display", "none");
-                $('#puEmailError').css("display", "none");
+                jQuery('#pagoUno_ccNo').removeClass('pu-invalid');
+                jQuery('#pagoUno_expdate').removeClass('pu-invalid');
+                jQuery('#pagoUno_cvc').removeClass('pu-invalid');
+                jQuery('#pagoUno_ccName').removeClass('pu-invalid');
+                jQuery('#pagoUno_ccDocNum').removeClass('pu-invalid');
 
                 if (php_params.extendedForm == "yes") {
-                    $('#puBirthDateError').css("display", "none");
-                    $('#puCountryError').css("display", "none");
-                    $('#puStateError').css("display", "none");
-                    $('#puCityError').css("display", "none");
-                    $('#puStreetError').css("display", "none");
-                    $('#puStreetNumberError').css("display", "none");
+                    
+                    jQuery('#pagoUno_email').removeClass('pu-invalid');
+                    jQuery('#pagoUno_birthDate').removeClass('pu-invalid');
+                    jQuery('#pagoUno_country').removeClass('pu-invalid');
+                    jQuery('#pagoUno_state').removeClass('pu-invalid');
+                    jQuery('#pagoUno_city').removeClass('pu-invalid');
+                    jQuery('#pagoUno_street').removeClass('pu-invalid');
+                    jQuery('#pagoUno_streetNumber').removeClass('pu-invalid');
+                    
                 };
 
                 var pagounoForm = {
@@ -258,7 +237,7 @@ jQuery(document).ready(function ($) {
                     ccExpDate: ccExpDate,
                     cvc: cvc,
                     name: name,
-                    phone: $('#pagoUno_phone').val(),
+                    phone: jQuery('#pagoUno_phone').val(),
                     email: email,
                     bDate: bDate,
                     address: {
@@ -269,7 +248,7 @@ jQuery(document).ready(function ($) {
                         door_number: streetNumber
                     },
                     identification: {
-                        document_type: $('#pagoUno_ccDocType').val(),
+                        document_type: jQuery('#pagoUno_ccDocType').val(),
                         document_number: docNum
                     }
                 }
@@ -351,7 +330,7 @@ jQuery(document).ready(function ($) {
                 checkout_form.on( 'checkout_place_order', tokenRequest );
             }
         } else {
-            var checkout_form = $( 'form.woocommerce-checkout' );
+            var checkout_form = jQuery( 'form.woocommerce-checkout' );
             checkout_form.off( 'checkout_place_order', tokenRequest );
             button.disabled = false;
             checkout_form.submit();
@@ -359,6 +338,6 @@ jQuery(document).ready(function ($) {
         }
         return false;
     };
-	var checkout_form = $( 'form.woocommerce-checkout' );
+	var checkout_form = jQuery( 'form.woocommerce-checkout' );
     checkout_form.on( 'checkout_place_order', tokenRequest );
 });

@@ -40,7 +40,7 @@ jQuery(document).ready(function ($) {
     }
 
     let cuotas = function(envio) {
-        var lista_cuotas = $('#pagoUno_dues');
+        var lista_cuotas = jQuery('#pagoUno_dues');
         
         lista_cuotas.html('');
     
@@ -90,19 +90,29 @@ jQuery(document).ready(function ($) {
                         (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2) + 
                         ')';
                     } else {
-                        let coef;
-                        let envioCosto = envioSelect(envio);
-                        for (let i=0; i<php_params_cuotas.coef.length; i++) {
-                            if (parseInt(php_params_cuotas.coef[i].cuota) === cuota.cuotas){
-                                coef = parseFloat(php_params_cuotas.coef[i].val);
+                        if (cuota.si) {
+                            let envioCosto = envioSelect(envio);
+                            option.setAttribute('value', cuota.cuotas + '-' + (parseFloat(cuota.total) + parseFloat( envioCosto )).toFixed(2));
+                            option.innerHTML = cuota.cuotas  + 
+                            ' cuotas sin interes de $ ' + (parseFloat(cuota.cuota) + parseFloat(( envioCosto / cuota.cuotas) )).toFixed(2) + 
+                            ' (Total: $' + 
+                            (parseFloat(cuota.total) + parseFloat( envioCosto )).toFixed(2) +
+                            ')';
+                        } else {
+                            let coef;
+                            let envioCosto = envioSelect(envio);
+                            for (let i=0; i<php_params_cuotas.coef.length; i++) {
+                                if (parseInt(php_params_cuotas.coef[i].cuota) === cuota.cuotas){
+                                    coef = parseFloat(php_params_cuotas.coef[i].val);
+                                }
                             }
+                            option.setAttribute('value', cuota.cuotas + '-' + (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2));
+                            option.innerHTML = cuota.cuotas  + 
+                            ' cuotas de $ ' + (parseFloat(cuota.cuota) + parseFloat(((envioCosto / cuota.cuotas) * coef))).toFixed(2) + 
+                            ' (Total: $' + 
+                            (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2) +
+                            ')';
                         }
-                        option.setAttribute('value', cuota.cuotas + '-' + (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2));
-                        option.innerHTML = cuota.cuotas  + 
-                        ' cuotas de $ ' + (parseFloat(cuota.cuota) + parseFloat(((envioCosto / cuota.cuota) * coef))).toFixed(2) + 
-                        ' (Total: $' + 
-                        (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2) +
-                        ')';
                     }
                     lista_cuotas.append(option);
                 }
@@ -110,13 +120,7 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    function updatedCheckout() {
-        $(document).on( 'updated_checkout', ()=>{
-            cuotas(envio());
-        });
-    }
-
-    $('body').on('init_checkout', function(){
-        updatedCheckout();
+    jQuery(document).on('init_checkout wc-credit-card-form-init updated_checkout', function() {
+        cuotas(envio());
     });
 })

@@ -1,0 +1,73 @@
+@font-face {
+    font-family: "Poppins-pu";
+    src: url(../fonts/Poppins-SemiBold.ttf) format('truetype');
+}
+
+#form-pagouno {
+    /*display: flex;*/
+    border-radius: 5px!important;
+    background-color: #f2f2f2!important;
+    display: inline-block!important;
+    font-family:"Poppins-pu"!important;
+    color: #666!important;
+}
+
+#form-pagouno label {
+    font-size: 12px!important;
+    color: #666!important;
+}
+
+.pagoUno-input, .pagoUno-select {
+    font-size: 12px!important;
+    font-family:"Poppins-pu"!important;
+    color: #666!important;
+    width: 100%!important;
+    -webkit-box-sizing: border-box!important; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box!important;    /* Firefox, other Gecko */
+    box-sizing: border-box!important;
+    padding: 6px 20px!important;
+    margin: 0!important;
+    border: 1px solid #ccc!important;
+    border-radius: 4px!important;
+}
+
+.pagoUno-input:focus {
+    outline: none!important;
+}
+
+.pagoUno-select:focus {
+    outline: none!important;
+}
+
+.pu-form-row {
+    width: 100%!important;
+    display: inline-block!important;
+    margin-bottom: 2%!important;
+    margin-top: 2%!important;
+}
+
+.pu-form-first {
+    width: 45%!important;
+    float: left!important;
+    margin-left: 2%!important;
+}
+    
+.pu-form-last {
+    width: 45%!important;
+    float: right!important;
+    margin-right: 2%!important;
+}
+
+.pu-form-wide {
+    margin-right: 2%!important;
+    margin-left: 2%!important;
+}
+
+.pu-required {
+    font-size: 10px!important;
+    color: #ff0000!important;
+}
+
+.pu-invalid {
+    border:1px solid #ff0000!important;
+}

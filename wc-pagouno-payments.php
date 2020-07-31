@@ -4,7 +4,7 @@ session_start();
  * Plugin Name:Payments for pagoUno on WooCommerce
  * Plugin URI: https://github.com/entradaUno/pagoUno-woocommerce
  * Description: Acepte pagos con tarjeta de credito y débito con el plugin de pagoUno en WooCommerce
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: entradaUno
  * Author URI: https://soluciones.entradauno.com/
  * Text Domain: woocommerce-pagouno
@@ -77,7 +77,7 @@ function pagouno_init_gateway_class () {
 
             // obtener el token por js
             add_action( 'wp_enqueue_scripts', array( $this, 'pagouno_scripts' ) );
-            
+
         }
         public function init_form_fields() {
 
@@ -125,6 +125,9 @@ function pagouno_init_gateway_class () {
                         '9'  => '9 Cuotas',
                         '12' => '12 Cuotas',
                         '24' => '24 Cuotas',
+                        '4'  => '3 cuotas sin interes',
+                        '5'  => '6 cuotas sin interes',
+                        '11' => '12 cuotas sin interes',
                         '13' => 'Ahora 3',
                         '16' => 'Ahora 6',
                         '7'  => 'Ahora 12',
@@ -136,35 +139,35 @@ function pagouno_init_gateway_class () {
                     ),
                 ),
                 'coef_3' => array(
-                    'title'       => 'Coeficiente para 3 Cutoas',
+                    'title'       => 'Coeficiente para 3 Cuotas',
                     'type'        => 'text',
                     'placeholder' => 'En caso de no tener habilitado dejar en blanco',
                     'description' => 'Introducir coeficiente',
                     'desc_tip'    => true
                 ),
                 'coef_6' => array(
-                    'title'       => 'Coeficiente para 6 Cutoas',
+                    'title'       => 'Coeficiente para 6 Cuotas',
                     'type'        => 'text',
                     'placeholder' => 'En caso de no tener habilitado dejar en blanco',
                     'description' => 'Introducir coeficiente',
                     'desc_tip'    => true
                 ),
                 'coef_9' => array(
-                    'title'       => 'Coeficiente para 9 Cutoas',
+                    'title'       => 'Coeficiente para 9 Cuotas',
                     'type'        => 'text',
                     'placeholder' => 'En caso de no tener habilitado dejar en blanco',
                     'description' => 'Introducir coeficiente',
                     'desc_tip'    => true
                 ),
                 'coef_12' => array(
-                    'title'       => 'Coeficiente para 12 Cutoas',
+                    'title'       => 'Coeficiente para 12 Cuotas',
                     'type'        => 'text',
                     'placeholder' => 'En caso de no tener habilitado dejar en blanco',
                     'description' => 'Introducir coeficiente',
                     'desc_tip'    => true
                 ),
                 'coef_24' => array(
-                    'title'       => 'Coeficiente para 24 Cutoas',
+                    'title'       => 'Coeficiente para 24 Cuotas',
                     'type'        => 'text',
                     'placeholder' => 'En caso de no tener habilitado dejar en blanco',
                     'description' => 'Introducir coeficiente',
@@ -276,109 +279,135 @@ function pagouno_init_gateway_class () {
 
             // Html con los input para los datos de la tarjeta
             if( $this->extended_form == "no" ) {
-                echo '  <div class="form-row form-row-first">
-                            <label>Numero de tarjeta <span id="pu_cc_type"></span><span class="required"> *<span id="puCcError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_ccNo" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Fecha de Vto. <span class="required">*<span id="puEpError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_expdate" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-first">
-                            <label>Nombre del Titular <span class="required">* <span id="puNameError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_ccName" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Cod. de Seguridad <span class="required">*<span id="puCvcError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_cvc" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-first">
-                            <label>Tipo de Documento <span class="required">*</span></label>
-                            <select id="pagoUno_ccDocType" class="" name="select" style="width: 100%">
-                                <option value="DNI" selected>DNI</option>
-                                <option value="CUIL">CUIL</option>
-                                <option value="OTRO">OTRO</option>
-                            </select>
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Número <span class="required">*<span id="puDocNumError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_ccDocNum" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-wide">
-                            <label>Cantidad de Cuotas <span class="required">*</span></label>
-                            <select id="pagoUno_dues" class="" name="select" style="width: 100%">
-                            </select>
-                        </div>
-                        <div class="form-row form-row-wide">
-                            <label>Email de Contacto <span class="required">*<span id="puEmailError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_email" type="text" autocomplete="off">
+                echo '  <div id="form-pagouno">
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                    <label>Número de tarjeta <span id="pu_cc_type"></span><span class="pu-required"> *<span id="puCcError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_ccNo" type="text" autocomplete="off">
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Fecha de Vto. <span class="pu-required">*<span id="puEpError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_expdate" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                    <label>Nombre del Titular <span class="pu-required">* <span id="puNameError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_ccName" type="text" autocomplete="off">
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Cod. de Seguridad <span class="pu-required">*<span id="puCvcError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_cvc" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                <label>Tipo de Documento <span class="pu-required">*</span></label>
+                                    <select class="pagoUno-select" id="pagoUno_ccDocType" class="" name="select" style="width: 100%">
+                                        <option class="pu-option" value="DNI" selected>DNI</option>
+                                        <option class="pu-option" value="CUIL">CUIL</option>
+                                        <option class="pu-option" value="OTRO">OTRO</option>
+                                    </select>
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Número <span class="pu-required">*<span id="puDocNumError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_ccDocNum" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-wide">
+                                    <label>Cantidad de Cuotas <span class="pu-required">*</span></label>
+                                    <select class="pagoUno-select" id="pagoUno_dues" class="" name="select" style="width: 100%">
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="clear"></div>';
             } else if ( $this->extended_form == "yes" ){
-                echo '  <div class="form-row form-row-first">
-                            <label>Numero de tarjeta <span id="pu_cc_type"></span><span class="required"> *<span id="puCcError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_ccNo" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Fecha de Vto. <span class="required">* <span id="puEpError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_expdate" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-first">
-                            <label>Nombre del Titular <span class="required">*<span id="puNameError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_ccName" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Cod. de Seguridad <span class="required">* <span id="puCvcError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_cvc" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-first">
-                            <label>Tipo de Documento <span class="required">*</span></label>
-                            <select id="pagoUno_ccDocType" class="" name="select" style="width: 100%">
-                                <option value="DNI" selected>DNI</option>
-                                <option value="CUIL">CUIL</option>
-                                <option value="OTRO">OTRO</option>
-                            </select>
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Número <span class="required">*<span id="puDocNumError" style="display: none;"> Incorrecto</span></span></label>
-                            <input id="pagoUno_ccDocNum" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-wide">
-                            <label>Cantidad de Cuotas <span class="required">*</span></label>
-                            <select id="pagoUno_dues" class="" name="select" style="width: 100%">
-                            </select>
-                        </div>
-                        <div class="form-row form-row-wide">
-                            <label>Email de Contacto <span class="required">*<span id="puEmailError" style="display: none;"> Ingrese una dirección de email válida</span></span></label>
-                            <input id="pagoUno_email" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-first">
-                            <label>Fecha de Nacimiento <span class="required">*<span id="puBirthDateError" style="display: none;"> Incorrecto</span></label>
-                            <input id="pagoUno_birthDate" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Número de Telefono (Opcional)</label>
-                            <input id="pagoUno_phone" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-wide">
-                            <label>País <span class="required">*<span id="puCountryError" style="display: none;"> Ingrese un país válido</span></label>
-                            <input id="pagoUno_country" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-first">
-                            <label>Provincia <span class="required">*<span id="puStateError" style="display: none;"> Incorrecto</span></label>
-                            <input id="pagoUno_state" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Ciudad <span class="required">*<span id="puCityError" style="display: none;"> Incorrecto</span></label>
-                            <input id="pagoUno_city" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-first">
-                            <label>Calle <span class="required">*<span id="puStreetError" style="display: none;"> Incorrecto</span></label>
-                            <input id="pagoUno_street" type="text" autocomplete="off">
-                        </div>
-                        <div class="form-row form-row-last">
-                            <label>Altura <span class="required">*<span id="puStreetNumberError" style="display: none;"> Incorrecto</span></label>
-                            <input id="pagoUno_streetNumber" type="text" autocomplete="off">
+                echo '  <div id="form-pagouno">
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                    <label>Número de tarjeta <span id="pu_cc_type"></span><span class="pu-required"> *<span id="puCcError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_ccNo" type="text" autocomplete="off">
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Fecha de Vto. <span class="pu-required">*<span id="puEpError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_expdate" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                    <label>Nombre del Titular <span class="pu-required">* <span id="puNameError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_ccName" type="text" autocomplete="off">
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Cod. de Seguridad <span class="pu-required">*<span id="puCvcError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_cvc" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                <label>Tipo de Documento <span class="pu-required">*</span></label>
+                                    <select class="pagoUno-select" id="pagoUno_ccDocType" class="" name="select" style="width: 100%">
+                                        <option class="pu-option" value="DNI" selected>DNI</option>
+                                        <option class="pu-option" value="CUIL">CUIL</option>
+                                        <option class="pu-option" value="OTRO">OTRO</option>
+                                    </select>
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Número <span class="pu-required">*<span id="puDocNumError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_ccDocNum" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-wide">
+                                    <label>Cantidad de Cuotas <span class="pu-required">*</span></label>
+                                    <select class="pagoUno-select" id="pagoUno_dues" class="" name="select" style="width: 100%">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-wide">
+                                    <label>Email de Contacto <span class="pu-required">*<span id="puEmailError" style="display: none;"> Incorrecto</span></span></label>
+                                    <input class="pagoUno-input" id="pagoUno_email" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                    <label>Fecha de Nacimiento <span class="pu-required">*<span id="puBirthDateError" style="display: none;"> Incorrecto</span></label>
+                                    <input class="pagoUno-input" id="pagoUno_birthDate" type="text" autocomplete="off">
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Número de Telefono</label>
+                                    <input class="pagoUno-input" id="pagoUno_phone" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-wide">
+                                    <label>País <span class="pu-required">*<span id="puCountryError" style="display: none;"> Ingrese un país válido</span></label>
+                                    <input class="pagoUno-input" id="pagoUno_country" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                    <label>Provincia <span class="pu-required">*<span id="puStateError" style="display: none;"> Incorrecto</span></label>
+                                    <input class="pagoUno-input" id="pagoUno_state" type="text" autocomplete="off">
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Ciudad <span class="pu-required">*<span id="puCityError" style="display: none;"> Incorrecto</span></label>
+                                    <input class="pagoUno-input" id="pagoUno_city" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="pu-form-row">
+                                <div class="pu-input pu-form-first">
+                                    <label>Calle <span class="pu-required">*<span id="puStreetError" style="display: none;"> Incorrecto</span></label>
+                                    <input class="pagoUno-input" id="pagoUno_street" type="text" autocomplete="off">
+                                </div>
+                                <div class="pu-input pu-form-last">
+                                    <label>Altura <span class="pu-required">*<span id="puStreetNumberError" style="display: none;"> Incorrecto</span></label>
+                                    <input class="pagoUno-input" id="pagoUno_streetNumber" type="text" autocomplete="off">
+                                </div>
+                            </div>
                         </div>
                         <div class="clear"></div>
                         ';
@@ -394,7 +423,7 @@ function pagouno_init_gateway_class () {
 
             $total = $woocommerce->session->get('cart_totals')['total'];
             $total_shipping = $woocommerce->session->get('cart_totals')['shipping_total'];
-            
+
             $this->$cuotas_arr = array();
             if( !empty( $this->cuotas_habilitadas ) && is_array( $this->cuotas_habilitadas ) ){
                 global $woocommerce;
@@ -403,7 +432,7 @@ function pagouno_init_gateway_class () {
                 for ($i = 0; $i < count($this->cuotas_habilitadas); $i ++) {
                     switch ( $this->cuotas_habilitadas[$i] ) {
                         case 3:
-                            if ( !empty($this->coef_3) && is_numeric($this->coef_3)) {
+                            if ( !empty($this->coef_3) && is_numeric($this->coef_3) && $this->coef_3 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_3 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 3,
@@ -414,7 +443,7 @@ function pagouno_init_gateway_class () {
                             } else {};
                             break;
                         case 6:
-                            if ( !empty($this->coef_6) && is_numeric($this->coef_6)) {
+                            if ( !empty($this->coef_6) && is_numeric($this->coef_6) && $this->coef_6 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_6 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 6,
@@ -425,7 +454,7 @@ function pagouno_init_gateway_class () {
                             } else {};
                             break;
                         case 9:
-                            if ( !empty($this->coef_9) && is_numeric($this->coef_9) ) {
+                            if ( !empty($this->coef_9) && is_numeric($this->coef_9) && $this->coef_9 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_9 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 9,
@@ -436,7 +465,7 @@ function pagouno_init_gateway_class () {
                             } else {};
                             break;
                         case 12:
-                            if ( !empty($this->coef_12) && is_numeric($this->coef_12) ) {
+                            if ( !empty($this->coef_12) && is_numeric($this->coef_12) && $this->coef_12 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_12, 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 12,
@@ -447,7 +476,7 @@ function pagouno_init_gateway_class () {
                             } else {};
                             break;
                         case 24:
-                            if ( !empty($this->coef_24) && is_numeric($this->coef_24) ) {
+                            if ( !empty($this->coef_24) && is_numeric($this->coef_24) && $this->coef_24 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_24 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 24,
@@ -457,8 +486,38 @@ function pagouno_init_gateway_class () {
                                 ));
                             } else {};
                             break;
+                        case 4:
+                            $price_formated = number_format( $total_price, 2, '.', '');
+                            array_push($this->$cuotas_arr, array (
+                                'cuotas'  => 3,
+                                'isAhora' => false,
+                                'si'      => true,
+                                'total'   => $price_formated,
+                                'cuota'   => number_format( $price_formated / 3 , 2, '.', '')
+                            ));
+                            break;
+                        case 5:
+                            $price_formated = number_format( $total_price, 2, '.', '');
+                            array_push($this->$cuotas_arr, array (
+                                'cuotas'  => 6,
+                                'isAhora' => false,
+                                'si'      => true,
+                                'total'   => $price_formated,
+                                'cuota'   => number_format( $price_formated / 6 , 2, '.', '')
+                            ));
+                            break;
+                        case 11:
+                            $price_formated = number_format( $total_price, 2, '.', '');
+                            array_push($this->$cuotas_arr, array (
+                                'cuotas'  => 12,
+                                'isAhora' => false,
+                                'si'      => true,
+                                'total'   => $price_formated,
+                                'cuota'   => number_format( $price_formated / 12 , 2, '.', '')
+                            ));
+                            break;
                         case 13:
-                            if ( !empty($this->coef_a3) && is_numeric($this->coef_a3) ) {
+                            if ( !empty($this->coef_a3) && is_numeric($this->coef_a3) && $this->coef_a3 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_a3 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas'  => 13,
@@ -469,7 +528,7 @@ function pagouno_init_gateway_class () {
                             } else {};
                             break;
                         case 16:
-                            if ( !empty($this->coef_a6) && is_numeric($this->coef_a6) ) {
+                            if ( !empty($this->coef_a6) && is_numeric($this->coef_a6) && $this->coef_a6 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_a6 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 16,
@@ -480,7 +539,7 @@ function pagouno_init_gateway_class () {
                             } else {};
                             break;
                         case 7:
-                            if ( !empty($this->coef_a12) && is_numeric($this->coef_a12) ) {
+                            if ( !empty($this->coef_a12) && is_numeric($this->coef_a12) && $this->coef_a12 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_a12 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 7,
@@ -491,7 +550,7 @@ function pagouno_init_gateway_class () {
                             } else {};
                             break;
                         case 8:
-                            if ( !empty($this->coef_a18) && is_numeric($this->coef_a18) ) {
+                            if ( !empty($this->coef_a18) && is_numeric($this->coef_a18) && $this->coef_a18 > 1) {
                                 $price_formated = number_format( $total_price * $this->coef_a18 , 2, '.', '');
                                 array_push($this->$cuotas_arr, array (
                                     'cuotas' => 8,
@@ -518,7 +577,7 @@ function pagouno_init_gateway_class () {
                             'label_name'  => $shipping_rate->get_label(),
                             'cost'        => $shipping_rate->get_cost(),
                             'tax_cost'    => $shipping_rate->get_shipping_tax(),
-                            'taxes'       => $shipping_rate->get_taxes() 
+                            'taxes'       => $shipping_rate->get_taxes()
                         ));
                     }
                 }
@@ -547,6 +606,8 @@ function pagouno_init_gateway_class () {
 			wp_enqueue_script( 'mask_js', plugins_url( '/assets/js/mask.js', __FILE__ ), array('jquery'), $my_js_mask );
             wp_enqueue_script( 'pago_uno_js', plugins_url( '/assets/js/pagoUno.js', __FILE__ ), array('jquery'), $my_js_pago_uno );
             wp_enqueue_script( 'cuotas_js', plugins_url( '/assets/js/cuotas.js', __FILE__ ), array('jquery'), $my_js_cuotas );
+
+            wp_enqueue_style( 'pago_uno_form_css', plugins_url( '/assets/css/pagouno-css-form.css', __FILE__ ));
 
 			wp_localize_script( 'mask_js', 'php_params_mask', array(
                 'extendedForm' => $this->extended_form
@@ -653,7 +714,7 @@ function pagouno_init_gateway_class () {
             }
             $formated_dues = intval($dues_meta);
 
-            $url = str_replace( array("http://", "www.", ".com", ".ar", ".cl", ".ur", ".br"), "",  get_site_url() );
+            $url = str_replace( array("http://", "https://", "www.", ".com", ".org", ".net", ".ar", ".cl", ".ur", ".br", ".", "/", "-", "\/"), "",  get_site_url() );
 
             if ($token_meta == "-1") {
                 delete_post_meta( $order_id, 'pagouno_token' );
@@ -662,6 +723,19 @@ function pagouno_init_gateway_class () {
                 return;
             } else {
 
+                $seller_descriptor = '';
+                if ( strlen( strval($order_id) ) == 25) {
+                    $seller_descriptor = $order_id;
+                } else {
+                    if ( strlen( strval($url . "*" . $order_id) ) <= 25) {
+                        $seller_descriptor = strval( $url . "*" . $order_id);
+                    }  else {
+                        $difference = -1 * abs( ( strlen( strval($url) ) + strlen( strval("*" . $order_id) ) ) - 25 );
+                        $chop_url = substr( $url, 0, $difference );
+                        $seller_descriptor = strval( $chop_url . "*" . $order_id);
+                    }
+                }
+
                 //parametros para el servicio de cobro de pagoUno
                 $purch_list = new StdClass();
                 $purch_list -> merchant_code_group = $this->merchant_code_group;
@@ -669,7 +743,7 @@ function pagouno_init_gateway_class () {
                 $purch_list -> installments_plan = 0;
                 $purch_list -> installments = $formated_dues;
                 $purch_list -> transaction_currency_code = "032";
-                $purch_list -> seller_descriptor = strval($url . " " . $order_id);
+                $purch_list -> seller_descriptor = $seller_descriptor;
 
                 $prim_acc = new StdClass();
                 $prim_acc -> token_id = $token_meta;
@@ -698,29 +772,41 @@ function pagouno_init_gateway_class () {
                 //evaluacion de la respuesta de pagoUno
                 if( !is_wp_error( $response ) ) {
                     $body = json_decode( $response['body'], true );
-                    if ( $body['status'] == 200 ) {
-                        if ($body['data']['success']) {
+                    switch ( $body['status'] ) {
+                        case 200:
+                            if ($body['data']['success']) {
+                                delete_post_meta( $order_id, 'pagouno_token' );
+                                delete_post_meta( $order_id, 'pagouno_hidden_total' );
+                                $order->payment_complete();
+                                $order->reduce_order_stock();
+                                $order->add_order_note( 'Su orden fue procesada, gracias por su compra!', true );
+                                $woocommerce->cart->empty_cart();
+                                return array(
+                                    'result' => 'success',
+                                    'redirect' => $this->get_return_url( $order )
+                                );
+                            } else {
+                                delete_post_meta( $order_id, 'pagouno_token' );
+                                delete_post_meta( $order_id, 'pagouno_hidden_total' );
+                                wc_add_notice(  'Su pago a sido rechazado.', 'error' );
+                                return;
+                            }
+                            break;
+                        case 400:
                             delete_post_meta( $order_id, 'pagouno_token' );
                             delete_post_meta( $order_id, 'pagouno_hidden_total' );
-                            $order->payment_complete();
-                            $order->reduce_order_stock();
-                            $order->add_order_note( 'Su orden fue procesada, gracias por su compra!', true );
-                            $woocommerce->cart->empty_cart();
-                            return array(
-                                'result' => 'success',
-                                'redirect' => $this->get_return_url( $order )
-                            );
-                        } else {
+                            wc_add_notice(  $body['status'] . " " . $body['message'], 'error' );
+                            break;
+                        case 403:
                             delete_post_meta( $order_id, 'pagouno_token' );
                             delete_post_meta( $order_id, 'pagouno_hidden_total' );
-                            wc_add_notice(  'Su pago a sido rechazado.', 'error' );
-                            return;
-                        }
-                    } else {
-                        delete_post_meta( $order_id, 'pagouno_token' );
-                        delete_post_meta( $order_id, 'pagouno_hidden_total' );
-                        wc_add_notice(  'Error interno, intentelo mas tarde.', 'error' );
-                        return;
+                            wc_add_notice(   $body['status'] . " " . $body['message'], 'error' );
+                            break;
+                        default:
+                            delete_post_meta( $order_id, 'pagouno_token' );
+                            delete_post_meta( $order_id, 'pagouno_hidden_total' );
+                            wc_add_notice(  'Error interno, intentelo mas tarde.', 'error' );
+                            break;
                     }
                 } else {
                     delete_post_meta( $order_id, 'pagouno_token' );
