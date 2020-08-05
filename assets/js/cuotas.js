@@ -1,56 +1,16 @@
 jQuery(document).ready(function ($) {
-
-    let envioSelect = function(val) {
-        if (php_params_cuotas.envios[0] !== undefined) {
-            let envioPrecio = false;
-            for (let i=0; i<php_params_cuotas.envios.length; i++) {
-                if (php_params_cuotas.envios[i].rate_id === val){
-                    envioPrecio = parseFloat(php_params_cuotas.envios[i].cost).toFixed(2);
-                }
-            }
-            if ( envioPrecio === false ) {
-                location.reload();
-                return 0;
-            } else {
-                return parseFloat(envioPrecio).toFixed(2);
-            }
-        } else {
-            //location.reload();
-            return 0;
-        }
-    };
-
-    let envio = function() {
-        if (document.querySelector('#shipping_method') !== null) {
-            if (php_params_cuotas.envios[0] !== undefined) {
-                let checkbox = document.querySelector('#shipping_method').querySelectorAll('input');
-                let val;
-                for (let i=0; i<checkbox.length; i++) {
-                    if(checkbox[i].checked) {
-                        val = checkbox[i].getAttribute('value');
-                    }
-                }
-                return val;   
-            } else {
-                location.reload();
-            }
-        } else {
-            return 0;
-        }
-    }
-
-    let cuotas = function(envio) {
+    let cuotas = function(data) {
         var lista_cuotas = jQuery('#pagoUno_dues');
         
         lista_cuotas.html('');
     
         var option_default = document.createElement('option');
         option_default.setAttribute('value', '1-false');
-        option_default.innerHTML = '1 solo pago de $' + (parseFloat(php_params_cuotas.total) + parseFloat(envioSelect(envio))).toFixed(2);
+        option_default.innerHTML = '1 solo pago de $' + data.total;
         lista_cuotas.append(option_default);
     
-        if(php_params_cuotas.cuotas !== "no"){
-            php_params_cuotas.cuotas.forEach( cuota => {
+        if(data.cuotas_arr !== "no"){
+            data.cuotas_arr.forEach( cuota => {
                 if(!isNaN(parseFloat(cuota.total)) && cuota.total > 0){
                     var option = document.createElement('option');
                     if (cuota.isAhora) {
@@ -75,42 +35,36 @@ jQuery(document).ready(function ($) {
                                 break;
                         }
                         let coef = 1;
-                        let envioCosto = envioSelect(envio);
+                        //let envioCosto = envioSelect(envio);
                         for (let i=0; i<php_params_cuotas.coef.length; i++) {
                             if (parseInt(php_params_cuotas.coef[i].cuota) === cuota.cuotas){
                                 coef = parseFloat(php_params_cuotas.coef[i].val);
                             }
                         }
-                        option.setAttribute('value', cuota.cuotas + '-' + (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2));
+                        option.setAttribute('value', cuota.cuotas + '-' + cuota.total);
                         option.innerHTML = ahora_cu + 
                         ' cuotas con ' + ahora_le + 
                         ' de $ ' + 
-                        (parseFloat(cuota.cuota) + parseFloat(((envioCosto / ahora_cu) * coef))).toFixed(2) + 
+                        cuota.cuota + 
                         ' (Total: $' + 
-                        (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2) + 
+                        cuota.total + 
                         ')';
                     } else {
                         if (cuota.si) {
-                            let envioCosto = envioSelect(envio);
-                            option.setAttribute('value', cuota.cuotas + '-' + (parseFloat(cuota.total) + parseFloat( envioCosto )).toFixed(2));
+                            //let envioCosto = envioSelect(envio);
+                            option.setAttribute('value', cuota.cuotas + '-' + cuota.total);
                             option.innerHTML = cuota.cuotas  + 
-                            ' cuotas sin interes de $ ' + (parseFloat(cuota.cuota) + parseFloat(( envioCosto / cuota.cuotas) )).toFixed(2) + 
+                            ' cuotas sin interes de $ ' + cuota.cuota + 
                             ' (Total: $' + 
-                            (parseFloat(cuota.total) + parseFloat( envioCosto )).toFixed(2) +
+                            cuota.total +
                             ')';
                         } else {
-                            let coef;
-                            let envioCosto = envioSelect(envio);
-                            for (let i=0; i<php_params_cuotas.coef.length; i++) {
-                                if (parseInt(php_params_cuotas.coef[i].cuota) === cuota.cuotas){
-                                    coef = parseFloat(php_params_cuotas.coef[i].val);
-                                }
-                            }
-                            option.setAttribute('value', cuota.cuotas + '-' + (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2));
+                            //let envioCosto = envioSelect(envio);
+                            option.setAttribute('value', cuota.cuotas + '-' + cuota.total);
                             option.innerHTML = cuota.cuotas  + 
-                            ' cuotas de $ ' + (parseFloat(cuota.cuota) + parseFloat(((envioCosto / cuota.cuotas) * coef))).toFixed(2) + 
+                            ' cuotas de $ ' + cuota.cuota + 
                             ' (Total: $' + 
-                            (parseFloat(cuota.total) + parseFloat((envioCosto * coef))).toFixed(2) +
+                            cuota.total +
                             ')';
                         }
                     }
@@ -121,6 +75,19 @@ jQuery(document).ready(function ($) {
     }
 
     jQuery(document).on('init_checkout wc-credit-card-form-init updated_checkout', function() {
-        cuotas(envio());
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'X-WP-Nonce': php_params_cuotas.nonce
+        });
+        fetch(php_params_cuotas.url, {
+            method: 'get',
+            headers: headers,
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            return response.ok ? response.json() : 'Not Found...';
+        }).then(json_response => {
+            cuotas(json_response);
+        });
     });
 })
