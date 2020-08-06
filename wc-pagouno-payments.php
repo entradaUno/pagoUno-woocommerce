@@ -4,7 +4,7 @@ session_start();
  * Plugin Name:Payments for pagoUno on WooCommerce
  * Plugin URI: https://github.com/entradaUno/pagoUno-woocommerce
  * Description: Acepte pagos con tarjeta de credito y débito con el plugin de pagoUno en WooCommerce
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: entradaUno
  * Author URI: https://soluciones.entradauno.com/
  * Text Domain: woocommerce-pagouno
@@ -22,6 +22,12 @@ add_filter( 'woocommerce_payment_gateways', 'pagouno_add_gateway_class' );
 function pagouno_add_gateway_class( $gateways ) {
     $gateways[] = 'WC_PagoUno_Gateway';
     return $gateways;
+}
+
+function console_log( $data ){
+    echo '<script>';
+    echo 'console.log('. json_encode( $data ) .')';
+    echo '</script>';
 }
 
 //inicializacion de la clase
@@ -262,14 +268,234 @@ function pagouno_init_gateway_class () {
             }
         }
 
+        public function cuotas_arr() {
+            global $woocommerce;
+            $total = $woocommerce->session->get('cart_totals')['total'];
+
+            $cuotas_arr = array();
+            if( !empty( $this->cuotas_habilitadas ) && is_array( $this->cuotas_habilitadas ) ){
+                $total_price = number_format( $total , 2, '.', '');
+                $price_formated = '';
+                for ($i = 0; $i < count($this->cuotas_habilitadas); $i ++) {
+                    switch ( $this->cuotas_habilitadas[$i] ) {
+                        case 3:
+                            if ( !empty($this->coef_3) && is_numeric($this->coef_3) && $this->coef_3 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_3 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 3,
+                                    'isAhora' => false,
+                                    'si'      => false,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 3 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 6:
+                            if ( !empty($this->coef_6) && is_numeric($this->coef_6) && $this->coef_6 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_6 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 6,
+                                    'isAhora' => false,
+                                    'si'      => false,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 6 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 9:
+                            if ( !empty($this->coef_9) && is_numeric($this->coef_9) && $this->coef_9 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_9 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 9,
+                                    'isAhora' => false,
+                                    'si'      => false,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 9 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 12:
+                            if ( !empty($this->coef_12) && is_numeric($this->coef_12) && $this->coef_12 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_12, 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 12,
+                                    'isAhora' => false,
+                                    'si'      => false,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 12 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 24:
+                            if ( !empty($this->coef_24) && is_numeric($this->coef_24) && $this->coef_24 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_24 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 24,
+                                    'isAhora' => false,
+                                    'si'      => false,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 24 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 4:
+                            $price_formated = number_format( $total_price, 2, '.', '');
+                            array_push($cuotas_arr, array (
+                                'cuotas'  => 3,
+                                'isAhora' => false,
+                                'si'      => true,
+                                'total'   => $price_formated,
+                                'cuota'   => number_format( $price_formated / 3 , 2, '.', '')
+                            ));
+                            break;
+                        case 5:
+                            $price_formated = number_format( $total_price, 2, '.', '');
+                            array_push($cuotas_arr, array (
+                                'cuotas'  => 6,
+                                'isAhora' => false,
+                                'si'      => true,
+                                'total'   => $price_formated,
+                                'cuota'   => number_format( $price_formated / 6 , 2, '.', '')
+                            ));
+                            break;
+                        case 11:
+                            $price_formated = number_format( $total_price, 2, '.', '');
+                            array_push($cuotas_arr, array (
+                                'cuotas'  => 12,
+                                'isAhora' => false,
+                                'si'      => true,
+                                'total'   => $price_formated,
+                                'cuota'   => number_format( $price_formated / 12 , 2, '.', '')
+                            ));
+                            break;
+                        case 13:
+                            if ( !empty($this->coef_a3) && is_numeric($this->coef_a3) && $this->coef_a3 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_a3 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas'  => 13,
+                                    'isAhora' => true,
+                                    'si'      => false,
+                                    'total'   => $price_formated,
+                                    'cuota'   => number_format( $price_formated / 3 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 16:
+                            if ( !empty($this->coef_a6) && is_numeric($this->coef_a6) && $this->coef_a6 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_a6 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 16,
+                                    'isAhora' => true,
+                                    'si'      => false,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 6 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 7:
+                            if ( !empty($this->coef_a12) && is_numeric($this->coef_a12) && $this->coef_a12 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_a12 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 7,
+                                    'isAhora' => true,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 12 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                        case 8:
+                            if ( !empty($this->coef_a18) && is_numeric($this->coef_a18) && $this->coef_a18 > 1) {
+                                $price_formated = number_format( $total_price * $this->coef_a18 , 2, '.', '');
+                                array_push($cuotas_arr, array (
+                                    'cuotas' => 8,
+                                    'isAhora' => true,
+                                    'total'  => $price_formated,
+                                    'cuota'  => number_format( $price_formated / 18 , 2, '.', '')
+                                ));
+                            };
+                            break;
+                    }
+                };
+            } else {
+                $cuotas_arr = ["no"];
+            };
+
+            $cuotas_options = array();
+            for ($i=0; $i < count($cuotas_arr); $i ++){
+                if ($cuotas_arr[$i]['isAhora']) {
+                    switch($cuotas_arr[$i]['cuotas']) {
+                        case 13:
+                            array_push($cuotas_options,
+                                '<option value="13-'.$cuotas_arr[$i]['total'].'">3 cuotas con Ahora 3 de $'.$cuotas_arr[$i]['cuota'].' (Total: $'.$cuotas_arr[$i]['total'].')</option>'
+                            );
+                            break;
+                        case 16:
+                            array_push($cuotas_options,
+                                '<option value="16-'.$cuotas_arr[$i]['total'].'">6 cuotas con Ahora 6 de $'.$cuotas_arr[$i]['cuota'].' (Total: $'.$cuotas_arr[$i]['total'].')</option>'
+                            );
+                            break;
+                        case 7:
+                            array_push($cuotas_options,
+                                '<option value="7-'.$cuotas_arr[$i]['total'].'">12 cuotas con Ahora 12 de $'.$cuotas_arr[$i]['cuota'].' (Total: $'.$cuotas_arr[$i]['total'].')</option>'
+                            );
+                            break;
+                        case 8:
+                            array_push($cuotas_options,
+                                '<option value="8-'.$cuotas_arr[$i]['total'].'">18 cuotas con Ahora 18 de $'.$cuotas_arr[$i]['cuota'].' (Total: $'.$cuotas_arr[$i]['total'].')</option>'
+                            );
+                            break;
+                    }
+                } else if ($cuotas_arr[$i]['si']) {
+                    array_push($cuotas_options,
+                        '<option value="'
+                        .$cuotas_arr[$i]['cuotas']
+                        .'-'
+                        .$cuotas_arr[$i]['total']
+                        .'">'
+                        .$cuotas_arr[$i]['cuotas']
+                        .' cuotas sin interés de $'
+                        .$cuotas_arr[$i]['cuota']
+                        .' (Total: $'
+                        .$cuotas_arr[$i]['total']
+                        .')</option>'
+                    );
+                } else {
+                    array_push($cuotas_options,
+                        '<option value="'
+                        .$cuotas_arr[$i]['cuotas']
+                        .'-'
+                        .$cuotas_arr[$i]['total']
+                        .'">'
+                        .$cuotas_arr[$i]['cuotas']
+                        .' cuotas de $'
+                        .$cuotas_arr[$i]['cuota']
+                        .' (Total: $'
+                        .$cuotas_arr[$i]['total']
+                        .')</option>'
+                    );
+                }
+            }
+
+            $cuotas_formated = '<option value="1-false">1 solo pago de $'.$total.'</option>';
+            for ($i = 0; $i < count($cuotas_options); $i++) {
+                $cuotas_formated = $cuotas_formated . $cuotas_options[$i];
+            }
+            return $cuotas_formated;
+        }
+
         public function payment_fields() {
+            global $woocommerce;
+            $total = $woocommerce->session->get('cart_totals')['total'];
+
+            $options = $this->cuotas_arr();
 
             echo '<fieldset id="wc-' . esc_attr( $this->id ) . '-cc-form" class="wc-credit-card-form wc-payment-form" style="background:transparent;">';
             do_action( 'woocommerce_credit_card_form_start', $this->id );
 
             // Html con los input para los datos de la tarjeta
             if( $this->extended_form == "no" ) {
-                echo '  <div id="form-pagouno">
+                echo '  <input type="hidden" value='.$total .'>
+                        <div id="form-pagouno">
                             <div class="pu-form-row">
                                 <div class="pu-input pu-form-first">
                                     <label>Número de tarjeta <span id="pu_cc_type"></span><span class="pu-required"> *<span id="puCcError" style="display: none;"> Incorrecto</span></span></label>
@@ -308,6 +534,7 @@ function pagouno_init_gateway_class () {
                                 <div class="pu-input pu-form-wide">
                                     <label>Cantidad de Cuotas <span class="pu-required">*</span></label>
                                     <select class="pagoUno-select" id="pagoUno_dues" class="" name="select" style="width: 100%">
+                                        '.$options.'
                                     </select>
                                 </div>
                             </div>
@@ -353,6 +580,7 @@ function pagouno_init_gateway_class () {
                                 <div class="pu-input pu-form-wide">
                                     <label>Cantidad de Cuotas <span class="pu-required">*</span></label>
                                     <select class="pagoUno-select" id="pagoUno_dues" class="" name="select" style="width: 100%">
+                                        '.$options.'
                                     </select>
                                 </div>
                             </div>
@@ -409,11 +637,6 @@ function pagouno_init_gateway_class () {
 
         }
 
-        public function cuotas_contructor() {
-            $ref = new ReflectionProperty("WC_Swatch_Picker", "size");
-            return "asd";
-        }
-
         public function pagouno_scripts() {
             global $woocommerce;
 
@@ -454,12 +677,10 @@ function pagouno_init_gateway_class () {
 
 			$my_js_mask  = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/mask.js' ));
             $my_js_pago_uno = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/pagoUno.js' ));
-            $my_js_cuotas = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/cuotas.js' ));
 
             wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'mask_js', plugins_url( '/assets/js/mask.js', __FILE__ ), array('jquery'), $my_js_mask );
             wp_enqueue_script( 'pago_uno_js', plugins_url( '/assets/js/pagoUno.js', __FILE__ ), array('jquery'), $my_js_pago_uno );
-            wp_enqueue_script( 'cuotas_js', plugins_url( '/assets/js/cuotas.js', __FILE__ ), array('jquery'), $my_js_cuotas );
 
             wp_enqueue_style( 'pago_uno_form_css', plugins_url( '/assets/css/pagouno-css-form.css', __FILE__ ));
 
@@ -470,55 +691,6 @@ function pagouno_init_gateway_class () {
             wp_localize_script( 'pago_uno_js', 'php_params', array(
                 'publicKey'    => $this->publishable_key,
                 'extendedForm' => $this->extended_form,
-                /*'cuotas'       => $this->$cuotas_arr,
-                'total'        => $woocommerce->cart->total*/
-            ));
-
-            wp_localize_script( 'cuotas_js', 'php_params_cuotas', array(
-                'url'                => rest_url( '/pagouno/getdata' ),
-                'nonce'              => wp_create_nonce( 'wp_rest' ),
-                /*'cuotas_habilitadas' => $this->cuotas_habilitadas,
-                'cuotas'             => $this->$cuotas_arr,
-                'total'              => number_format( $total - $total_shipping , 2, '.', ''),*/
-                'envios'             => $envios,
-                'coef'               => array(
-                    [
-                        'cuota'   => 3,
-                        'val'     => floatval ($this->coef_3)
-                    ],
-                    [
-                        'cuota'   => 6,
-                        'val'     => floatval ($this->coef_6)
-                    ],
-                    [
-                        'cuota'   => 9,
-                        'val'     => floatval ($this->coef_9)
-                    ],
-                    [
-                        'cuota'  => 12,
-                        'val'    => floatval ($this->coef_12)
-                    ],
-                    [
-                        'cuota'  => 24,
-                        'val'    => floatval ($this->coef_24)
-                    ],
-                    [
-                        'cuota'  => 13,
-                        'val'    => floatval ($this->coef_a3)
-                    ],
-                    [
-                        'cuota'  => 16,
-                        'val'    => floatval ($this->coef_a6)
-                    ],
-                    [
-                        'cuota'   => 7,
-                        'val'     => floatval ($this->coef_a12)
-                    ],
-                    [
-                        'cuota'   => 8,
-                        'val'     => floatval ($this->coef_a18)
-                    ]
-                )
             ));
         }
         public function validate_fields() {
@@ -674,170 +846,4 @@ function pagouno_init_gateway_class () {
             }
         }
     }
-}
-
-function events_endpoint() {
-    register_rest_route( 'pagouno/', 'getdata', array(
-        'methods'  => WP_REST_Server::READABLE,
-        'callback' => 'new_data',
-    ));
-}
-add_action( 'rest_api_init', 'events_endpoint' );
-
-function new_data() {
-    class PagoUno_Extended extends WC_PagoUno_Gateway {
-        public function cuotas_arr() {
-            global $woocommerce;
-
-            $total = $woocommerce->session->get('cart_totals')['total'];
-            $total_shipping = $woocommerce->session->get('cart_totals')['shipping_total'];
-
-            $this->$cuotas_arr = array();
-            if( !empty( $this->cuotas_habilitadas ) && is_array( $this->cuotas_habilitadas ) ){
-                $total_price = number_format( $total , 2, '.', '');
-                $price_formated = '';
-                for ($i = 0; $i < count($this->cuotas_habilitadas); $i ++) {
-                    switch ( $this->cuotas_habilitadas[$i] ) {
-                        case 3:
-                            if ( !empty($this->coef_3) && is_numeric($this->coef_3) && $this->coef_3 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_3 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 3,
-                                    'isAhora' => false,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 3 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 6:
-                            if ( !empty($this->coef_6) && is_numeric($this->coef_6) && $this->coef_6 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_6 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 6,
-                                    'isAhora' => false,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 6 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 9:
-                            if ( !empty($this->coef_9) && is_numeric($this->coef_9) && $this->coef_9 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_9 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 9,
-                                    'isAhora' => false,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 9 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 12:
-                            if ( !empty($this->coef_12) && is_numeric($this->coef_12) && $this->coef_12 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_12, 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 12,
-                                    'isAhora' => false,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 12 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 24:
-                            if ( !empty($this->coef_24) && is_numeric($this->coef_24) && $this->coef_24 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_24 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 24,
-                                    'isAhora' => false,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 24 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 4:
-                            $price_formated = number_format( $total_price, 2, '.', '');
-                            array_push($this->$cuotas_arr, array (
-                                'cuotas'  => 3,
-                                'isAhora' => false,
-                                'si'      => true,
-                                'total'   => $price_formated,
-                                'cuota'   => number_format( $price_formated / 3 , 2, '.', '')
-                            ));
-                            break;
-                        case 5:
-                            $price_formated = number_format( $total_price, 2, '.', '');
-                            array_push($this->$cuotas_arr, array (
-                                'cuotas'  => 6,
-                                'isAhora' => false,
-                                'si'      => true,
-                                'total'   => $price_formated,
-                                'cuota'   => number_format( $price_formated / 6 , 2, '.', '')
-                            ));
-                            break;
-                        case 11:
-                            $price_formated = number_format( $total_price, 2, '.', '');
-                            array_push($this->$cuotas_arr, array (
-                                'cuotas'  => 12,
-                                'isAhora' => false,
-                                'si'      => true,
-                                'total'   => $price_formated,
-                                'cuota'   => number_format( $price_formated / 12 , 2, '.', '')
-                            ));
-                            break;
-                        case 13:
-                            if ( !empty($this->coef_a3) && is_numeric($this->coef_a3) && $this->coef_a3 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_a3 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas'  => 13,
-                                    'isAhora' => true,
-                                    'total'   => $price_formated,
-                                    'cuota'   => number_format( $price_formated / 3 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 16:
-                            if ( !empty($this->coef_a6) && is_numeric($this->coef_a6) && $this->coef_a6 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_a6 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 16,
-                                    'isAhora' => true,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 6 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 7:
-                            if ( !empty($this->coef_a12) && is_numeric($this->coef_a12) && $this->coef_a12 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_a12 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 7,
-                                    'isAhora' => true,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 12 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                        case 8:
-                            if ( !empty($this->coef_a18) && is_numeric($this->coef_a18) && $this->coef_a18 > 1) {
-                                $price_formated = number_format( $total_price * $this->coef_a18 , 2, '.', '');
-                                array_push($this->$cuotas_arr, array (
-                                    'cuotas' => 8,
-                                    'isAhora' => true,
-                                    'total'  => $price_formated,
-                                    'cuota'  => number_format( $price_formated / 18 , 2, '.', '')
-                                ));
-                            } else {};
-                            break;
-                    }
-                };
-            } else {
-                $this->$cuotas_arr = "no";
-            };
-            return array(
-                "total"      => $total,
-                "cuotas_arr" => $this->$cuotas_arr
-            );
-        }
-    }
-    $instance = new PagoUno_Extended();
-    return $instance->cuotas_arr();
 }
